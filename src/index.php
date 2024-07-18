@@ -13,6 +13,7 @@ include_once "includes/header.php";
 ?>
 <!-- Content Row -->
 <div class="row">
+    <!--
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
@@ -74,7 +75,7 @@ include_once "includes/header.php";
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
+     <div class="col-lg-6">
 		<div class="card">
             <div class="card-header card-header-primary">
                 <h3 class="title-2 m-b-40">Productos con stock mínimo</h3>
@@ -93,7 +94,7 @@ include_once "includes/header.php";
 			<canvas id="ProductosVendidos"></canvas>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <?php include_once "includes/footer.php"; ?>

@@ -91,7 +91,7 @@ include_once "includes/header.php";
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="telefono" class="text-dark font-weight-bold">Teléfono</label>
-                                <input type="number" placeholder="Ingrese Teléfono" name="telefono" id="telefono" class="form-control">
+                                <input type="text" placeholder="Ingrese Teléfono" name="telefono" id="telefono" class="form-control">
                                 <input type="hidden" name="id" id="id">
                             </div>
                         </div>

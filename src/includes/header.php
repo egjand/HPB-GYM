@@ -23,20 +23,20 @@ if (empty($_SESSION['active'])) {
     <div class="wrapper ">
         <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-1.jpg">
             <div class="logo"><a href="./" class="simple-text logo-normal">
-                    Punto de ventas
+                    HPB GYM 
                 </a></div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link d-flex" href="usuarios.php">
                             <i class="fas fa-user mr-2 fa-2x"></i>
                             <p> Usuarios</p>
                         </a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
-                        <a class="nav-link d-flex" href="config.php">
-                            <i class="fas fa-cogs mr-2 fa-2x"></i>
-                            <p> Configuración</p>
+                        <a class="nav-link d-flex" href="ventas.php">
+                            <i class="fas fa-users mr-2 fa-2x"></i>
+                            <p> Entrada </p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -51,7 +51,7 @@ if (empty($_SESSION['active'])) {
                             <p> Clientes</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link d-flex" href="ventas.php">
                             <i class="fas fa-cash-register mr-2 fa-2x"></i>
                             <p> Nueva Venta</p>
@@ -62,7 +62,7 @@ if (empty($_SESSION['active'])) {
                             <i class="fas fa-cart-plus mr-2 fa-2x"></i>
                             <p> Historial Ventas</p>
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>
@@ -71,7 +71,7 @@ if (empty($_SESSION['active'])) {
             <nav class="navbar navbar-expand-lg navbar-absolute fixed-top bg-dark">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">Sistema de Venta</a>
+                        <a class="navbar-brand" href="javascript:;">FITNESS GYM</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>

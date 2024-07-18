@@ -1,9 +1,7 @@
 <?php
 session_start();
 require("../conexion.php");
-$id_user = $_SESSION['idUser'];
-$permiso = "nueva_venta";
-$sql = mysqli_query($conexion, "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'");
+$sql = mysqli_query($conexion, "SELECT * FROM cliente c where idcliente = 1");
 $existe = mysqli_fetch_all($sql);
 if (empty($existe) && $id_user != 1) {
     header('Location: permisos.php');
@@ -13,7 +11,7 @@ include_once "includes/header.php";
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
-            <h4 class="text-center">Datos del Cliente</h4>
+            <h4 class="text-center">Datos del Socio</h4>
         </div>
         <div class="card">
             <div class="card-body">

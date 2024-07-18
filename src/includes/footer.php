@@ -7,7 +7,6 @@
             <script>
                 document.write(new Date().getFullYear())
             </script>
-            <a href="#" target="_blank">Sistemas Gratis</a>.
         </div>
     </div>
 </footer>

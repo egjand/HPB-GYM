@@ -79,7 +79,9 @@ if (!empty($_POST)) {
 <body>
     <div style="display: flex;justify-content: center; align-items: center; height: 100vh;">
         <div class="container">
-            <center><b class="title label mb-2">Login</b></center>
+            <center>
+                <img src="assets/img/Screenshot_1.png" alt="" class="img-class">
+            </center>
             <form action="" id="login-form" method="POST">
                 <div class="user-details">
                     <div class="input-box">
@@ -93,41 +95,11 @@ if (!empty($_POST)) {
                         <input type="submit" value="Login">
                     </div>
                 </div>
-                <center>
-                    <input type="checkbox" id="toggle" onclick="changeMode();"> Cambiar modo
-                </center>
             </form>
         </div>
     </div>
     <script src="assets/js/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="assets/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script>
-        var rootProp = document.documentElement.style;
-        var mode = true;
-
-        function changeMode() {
-            if (mode) {
-                darkMode();
-            } else {
-                lightMode();
-            }
-            mode = !mode;
-        }
-
-        function lightMode() {
-            rootProp.setProperty("--background1", "rgba(230, 230, 230)");
-            rootProp.setProperty("--shadow1", "rgba(119, 119, 119, 0.5)");
-            rootProp.setProperty("--shadow2", "rgba(255, 255, 255, 0.85)");
-            rootProp.setProperty("--labelColor", "black");
-        }
-
-        function darkMode() {
-            rootProp.setProperty("--background1", "rgb(9 25 33)");
-            rootProp.setProperty("--shadow1", "rgb(0 0 0 / 45%)");
-            rootProp.setProperty("--shadow2", "rgb(255 255 255 / 12%)");
-            rootProp.setProperty("--labelColor", "rgb(255 255 255 / 59%)");
-        }
-    </script>
 </body>
 
 </html>
