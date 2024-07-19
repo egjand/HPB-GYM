@@ -11,7 +11,7 @@ if (empty($existe) && $id_user != 1) {
 
 if (!empty($_POST)) {
     $alert = "";
-    if (empty($_POST['nombre']) || empty($_POST['telefono']) || empty($_POST['direccion'])) {
+    if (empty($_POST['idcliente']) || empty($_POST['nombre']) || empty($_POST['mes_registro'])|| empty($_POST['mes_vencimiento'])) {
         $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         Todo los campos son obligatorio
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -20,13 +20,16 @@ if (!empty($_POST)) {
                     </div>';
     } else {
         $id = $_POST['id'];
+        $idcliente = $_POST['idcliente'];
         $nombre = $_POST['nombre'];
-        $telefono = $_POST['telefono'];
-        $direccion = $_POST['direccion'];
+        $mes_registro = $_POST['mes_registro'];
+        $mes_vencimiento = $_POST['mes_vencimiento'];
         $result = 0;
         if (empty($id)) {
-            $query = mysqli_query($conexion, "SELECT * FROM cliente WHERE nombre = '$nombre'");
+            
+            $query = mysqli_query($conexion, "SELECT * FROM cliente WHERE id = '$id'");
             $result = mysqli_fetch_array($query);
+            
             if ($result > 0) {
                 $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         El cliente ya existe
@@ -35,7 +38,9 @@ if (!empty($_POST)) {
                         </button>
                     </div>';
             } else {
-                $query_insert = mysqli_query($conexion, "INSERT INTO cliente(nombre,telefono,direccion) values ('$nombre', '$telefono', '$direccion')");
+                
+                $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$mes_vencimiento', '')");
+                
                 if ($query_insert) {
                     $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         Cliente registrado
@@ -53,7 +58,9 @@ if (!empty($_POST)) {
                 }
             }
         }else{
-            $sql_update = mysqli_query($conexion, "UPDATE cliente SET nombre = '$nombre' , telefono = '$telefono', direccion = '$direccion' WHERE idcliente = $id");
+            
+            $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$mes_vencimiento' WHERE id = '$id'");
+            
             if ($sql_update) {
                 $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         Cliente Modificado
@@ -84,26 +91,33 @@ include_once "includes/header.php";
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="nombre" class="text-dark font-weight-bold">Nombre</label>
-                                <input type="text" placeholder="Ingrese Nombre" name="nombre" id="nombre" class="form-control">
+                                <label for="nombre" class="text-dark font-weight-bold">ID Socio</label>
+                                <input type="text" name="idcliente" id="idcliente" class="form-control">
+                                <input type="hidden" name="id" id="id">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="telefono" class="text-dark font-weight-bold">Teléfono</label>
-                                <input type="text" placeholder="Ingrese Teléfono" name="telefono" id="telefono" class="form-control">
-                                <input type="hidden" name="id" id="id">
+                                <label for="telefono" class="text-dark font-weight-bold">Nombre</label>
+                                <input type="text" placeholder="Ingrese Nombre" name="nombre" id="nombre" class="form-control">
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="direccion" class="text-dark font-weight-bold">Fecha Registro</label>
+                                <input type="date" name="mes_registro" id="mes_registro" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="direccion" class="text-dark font-weight-bold">Dirección</label>
-                                <input type="text" placeholder="Ingrese Direccion" name="direccion" id="direccion" class="form-control">
+                                <label for="direccion" class="text-dark font-weight-bold">Fecha Vencimiento</label>
+                                <input type="date" name="mes_vencimiento" id="mes_vencimiento" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4 mt-3">
                             <input type="submit" value="Registrar" class="btn btn-primary" id="btnAccion">
-                            <input type="button" value="Nuevo" class="btn btn-success" id="btnNuevo" onclick="limpiar()">
+                            <input type="button" value="Limpiar" class="btn btn-success" id="btnNuevo" onclick="limpiar()">
                         </div>
                     </div>
                 </form>
@@ -114,9 +128,10 @@ include_once "includes/header.php";
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
+                                <th>ID Socio</th>
                                 <th>Nombre</th>
-                                <th>Teléfono</th>
-                                <th>Dirección</th>
+                                <th>Fecha Registro</th>
+                                <th>Fecha Vencimiento</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -129,13 +144,14 @@ include_once "includes/header.php";
                             if ($result > 0) {
                                 while ($data = mysqli_fetch_assoc($query)) { ?>
                                     <tr>
+                                        <td><?php echo $data['id']; ?></td>
                                         <td><?php echo $data['idcliente']; ?></td>
                                         <td><?php echo $data['nombre']; ?></td>
-                                        <td><?php echo $data['telefono']; ?></td>
-                                        <td><?php echo $data['direccion']; ?></td>
+                                        <td><?php echo $data['mes_registro']; ?></td>
+                                        <td><?php echo $data['mes_vencimiento']; ?></td>
                                         <td>
-                                            <a href="#" onclick="editarCliente(<?php echo $data['idcliente']; ?>)" class="btn btn-primary"><i class='fas fa-edit'></i></a>
-                                            <form action="eliminar_cliente.php?id=<?php echo $data['idcliente']; ?>" method="post" class="confirmar d-inline">
+                                            <a href="#" onclick="editarCliente(<?php echo $data['id']; ?>)" class="btn btn-primary"><i class='fas fa-edit'></i></a>
+                                            <form action="eliminar_cliente.php?id=<?php echo $data['id']; ?>" method="post" class="confirmar d-inline">
                                                 <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
                                             </form>
                                         </td>

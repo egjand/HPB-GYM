@@ -66,11 +66,13 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
     $('#btn_generar').click(function (e) {
+        console.log('entre');
         e.preventDefault();
         var rows = $('#tblDetalle tr').length;
         if (rows > 2) {
             var action = 'procesarVenta';
             var id = $('#idcliente').val();
+            console.log(id);
             $.ajax({
                 url: 'ajax.php',
                 async: true,
@@ -462,6 +464,7 @@ function btnCambiar(e) {
 
 function editarCliente(id) {
     const action = "editarCliente";
+    console.log(id);
     $.ajax({
         url: 'ajax.php',
         type: 'GET',
@@ -472,12 +475,15 @@ function editarCliente(id) {
         },
         success: function (response) {
             const datos = JSON.parse(response);
+            $('#idcliente').val(datos.idcliente);
             $('#nombre').val(datos.nombre);
-            $('#telefono').val(datos.telefono);
-            $('#direccion').val(datos.direccion);
-            $('#id').val(datos.idcliente);
+            $('#mes_registro').val(datos.mes_registro);
+            $('#mes_vencimiento').val(datos.mes_vencimiento);
+            $('#id').val(datos.id);
             $('#btnAccion').val('Modificar');
+            
         },
+        
         error: function (error) {
             console.log(error);
 

@@ -102,8 +102,8 @@ if (isset($_GET['q'])) {
     echo json_encode($msg);
     die();
 }else if(isset($_GET['editarCliente'])){
-    $idcliente = $_GET['id'];
-    $sql = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $idcliente");
+    $id = $_GET['id'];
+    $sql = mysqli_query($conexion, "SELECT * FROM cliente WHERE id = $id");
     $data = mysqli_fetch_array($sql);
     echo json_encode($data);
     exit;
