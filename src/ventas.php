@@ -9,6 +9,8 @@ if (empty($existe) && $id_user != 1) {
     header('Location: permisos.php');
 }
 include_once "includes/header.php";
+
+$id = $_POST['id'];
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -16,61 +18,22 @@ include_once "includes/header.php";
             <h4 class="text-center">Datos del Cliente</h4>
         </div>
         <div class="card">
-            <div class="card-body">
-                <form method="post">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="hidden" id="idcliente" value="1" name="idcliente" required>
-                                <label>Nombre</label>
-                                <input type="text" name="nom_cliente" id="nom_cliente" class="form-control" placeholder="Ingrese nombre del cliente" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Teléfono</label>
-                                <input type="number" name="tel_cliente" id="tel_cliente" class="form-control" disabled required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Dirreción</label>
-                                <input type="text" name="dir_cliente" id="dir_cliente" class="form-control" disabled required>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="card">
             <div class="card-header bg-primary text-white text-center">
-                Buscar Productos
+                Buscar socio
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="form-group">
-                            <label for="producto">Código o Nombre</label>
-                            <input id="producto" class="form-control" type="text" name="producto" placeholder="Ingresa el código o nombre">
-                            <input id="id" type="hidden" name="id">
+                            <label for="id">Código del socio</label>
+                            <input id="id" class="form-control" type="text" name="id" placeholder="Ingresa el código de socio" onkeydown="if(event.keyCode == 13) { buscarSocio(); }">
+
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <label for="cantidad">Cantidad</label>
-                            <input id="cantidad" class="form-control" type="text" name="cantidad" placeholder="Cantidad" onkeyup="calcularPrecio(event)">
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label for="precio">Precio</label>
-                            <input id="precio" class="form-control" type="text" name="precio" placeholder="precio" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label for="sub_total">Sub Total</label>
-                            <input id="sub_total" class="form-control" type="text" name="sub_total" placeholder="Sub Total" disabled>
+                            <label for="huella">Huella</label>
+                            <input id="huella" class="form-control" type="text" name="huella" placeholder="Huella">
                         </div>
                     </div>
                 </div>
@@ -81,32 +44,36 @@ include_once "includes/header.php";
             <table class="table table-hover" id="tblDetalle">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Id</th>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
-                        <th>Aplicar</th>
-                        <th>Desc</th>
-                        <th>Precio</th>
-                        <th>Precio Total</th>
-                        <th>Accion</th>
+                        <th>IdSocio</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Vencimiento</th>
                     </tr>
                 </thead>
-                <tbody id="detalle_venta">
-
+                <tbody>
+                    
                 </tbody>
-                <tfoot>
-                    <tr class="font-weight-bold">
-                        <td>Total Pagar</td>
-                        <td></td>
-                    </tr>
-                </tfoot>
             </table>
 
         </div>
     </div>
-    <div class="col-md-6">
-        <a href="#" class="btn btn-primary" id="btn_generar"><i class="fas fa-save"></i> Generar Venta</a>
-    </div>
 
 </div>
 <?php include_once "includes/footer.php"; ?>
+
+<script>
+function buscarSocio() {
+    var codigoSocio = document.getElementById('id').value.trim();
+
+    if (codigoSocio !== '') {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'buscar_socio.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById('tblDetalle').getElementsByTagName('tbody')[0].innerHTML = xhr.responseText;
+            }
+        };
+        xhr.send('codigo=' + codigoSocio);
+    }
+}
+</script>
