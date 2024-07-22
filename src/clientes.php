@@ -11,7 +11,7 @@ if (empty($existe) && $id_user != 1) {
 
 if (!empty($_POST)) {
     $alert = "";
-    if (empty($_POST['idcliente']) || empty($_POST['nombre']) || empty($_POST['mes_registro'])|| empty($_POST['mes_vencimiento'])) {
+    if (empty($_POST['idcliente']) || empty($_POST['nombre']) || empty($_POST['mes_registro']) || empty($_POST['mes_vencimiento'])) {
         $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         Todo los campos son obligatorio
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -26,55 +26,55 @@ if (!empty($_POST)) {
         $mes_vencimiento = $_POST['mes_vencimiento'];
         $result = 0;
         if (empty($id)) {
-            
-            $query = mysqli_query($conexion, "SELECT * FROM cliente WHERE id = '$id'");
-            $result = mysqli_fetch_array($query);
-            
-            if ($result > 0) {
-                $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        El cliente ya existe
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
-            } else {
-                
-                $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$mes_vencimiento', '')");
-                
-                if ($query_insert) {
-                    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                        Cliente registrado
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
+
+            if ($idcliente) {
+                $query = mysqli_query($conexion, "SELECT * FROM cliente where idcliente = $idcliente");
+                $result = mysqli_fetch_array($query);
+                if ($result != NULL) {
+                    $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    El ID del Socio Ya Existe Utiliza Otro
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
                 } else {
-                    $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        Error al registrar
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
+                    $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$mes_vencimiento', '')");
+
+                    if ($query_insert) {
+                        $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Cliente registrado
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+                    } else {
+                        $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Error al registrar
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+                    }
                 }
             }
-        }else{
-            
+        } else {
+
             $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$mes_vencimiento' WHERE id = '$id'");
-            
+
             if ($sql_update) {
                 $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                        Cliente Modificado
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
+                            Cliente Modificado
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
             } else {
                 $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        Error al modificar
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
+                            Error al modificar
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
             }
         }
     }
@@ -86,7 +86,7 @@ include_once "includes/header.php";
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <?php echo (isset($alert)) ? $alert : '' ; ?>
+                <?php echo (isset($alert)) ? $alert : ''; ?>
                 <form action="" method="post" autocomplete="off" id="formulario">
                     <div class="row">
                         <div class="col-md-3">
@@ -101,7 +101,7 @@ include_once "includes/header.php";
                                 <label for="telefono" class="text-dark font-weight-bold">Nombre</label>
                                 <input type="text" placeholder="Ingrese Nombre" name="nombre" id="nombre" class="form-control">
                             </div>
-                            
+
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
@@ -127,7 +127,7 @@ include_once "includes/header.php";
                     <table class="table table-striped table-bordered" id="tbl">
                         <thead class="thead-dark">
                             <tr>
-                                <th>#</th>
+                                
                                 <th>ID Socio</th>
                                 <th>Nombre</th>
                                 <th>Fecha Registro</th>
@@ -144,7 +144,7 @@ include_once "includes/header.php";
                             if ($result > 0) {
                                 while ($data = mysqli_fetch_assoc($query)) { ?>
                                     <tr>
-                                        <td><?php echo $data['id']; ?></td>
+                                        
                                         <td><?php echo $data['idcliente']; ?></td>
                                         <td><?php echo $data['nombre']; ?></td>
                                         <td><?php echo $data['mes_registro']; ?></td>
