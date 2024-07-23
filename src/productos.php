@@ -8,53 +8,48 @@ $existe = mysqli_fetch_all($sql);
 if (empty($existe) && $id_user != 1) {
     header('Location: permisos.php');
 }
-
 if (!empty($_POST)) {
     $alert = "";
     $id = $_POST['id'];
     $producto = $_POST['producto'];
     $precio = $_POST['precio'];
     $cantidad = $_POST['cantidad'];
-
-    switch (true) {
-        case empty($producto) || empty($precio) || $precio < 0 || empty($cantidad) || $cantidad < 0:
-            $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        Todos los campos son obligatorios
+    if (empty($producto) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad <  0) {
+        $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Todo los campos son obligatorios
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>';
-            break;
-
-        case empty($producto):
+    } else {
+        if (empty($id)) {
             $query = mysqli_query($conexion, "SELECT * FROM producto WHERE descripcion = '$producto'");
             $result = mysqli_fetch_array($query);
             if ($result > 0) {
                 $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            El Producto ya existe
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>';
+                        El Producto ya existe
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
             } else {
                 $query_insert = mysqli_query($conexion, "INSERT INTO producto(descripcion,precio,existencia) values ('$producto', '$precio', '$cantidad')");
                 if ($query_insert) {
                     $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                Producto registrado
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>';
+                        Producto registrado
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
                 } else {
                     $alert = '<div class="alert alert-danger" role="alert">
-                                Error al registrar el producto
-                              </div>';
+                    Error al registrar el producto
+                  </div>';
                 }
             }
-            break;
+        }
     }
 }
-
 include_once "includes/header.php";
 ?>
 <div class="card shadow-lg">
