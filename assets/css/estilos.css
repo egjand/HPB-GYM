@@ -30,6 +30,16 @@ body{
 	
 }
 
+
+.content-input input,
+.content-select select{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+
+
 .container{
     max-width: 500px;
     width: 100%;
