@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 10-08-2021 a las 16:45:40
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.9
+-- Servidor: localhost
+-- Tiempo de generación: 23-07-2024 a las 23:15:34
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,21 +28,28 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cliente` (
+  `id` int(11) NOT NULL,
   `idcliente` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `direccion` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `nombre` varchar(100) NOT NULL,
+  `mes_registro` date NOT NULL,
+  `mes_vencimiento` date NOT NULL,
+  `huella` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `cliente`
 --
 
-INSERT INTO `cliente` (`idcliente`, `nombre`, `telefono`, `direccion`) VALUES
-(1, 'Ana Lopez', '978645132', 'Trujillo - Perú'),
-(2, 'Maria sanchez', '974561234', 'Trujillo - Perú'),
-(4, 'Nuevo Cliente', '97877789', 'Av. san martin n° 342'),
-(6, 'Registro de Cliente', '978978', 'Av. Libertad');
+INSERT INTO `cliente` (`id`, `idcliente`, `nombre`, `mes_registro`, `mes_vencimiento`, `huella`) VALUES
+(10, 106, 'Paola Lopez', '2024-07-18', '2024-08-18', ''),
+(11, 160, 'Eugenio Gonzalez', '2024-07-18', '2024-07-24', ''),
+(12, 200, 'Edwin Aranda', '2024-07-18', '2024-07-30', ''),
+(13, 201, 'Leo Naz', '2024-07-18', '2024-08-08', ''),
+(14, 103, 'Danna Elizabeth', '2024-07-18', '2024-09-18', ''),
+(15, 163, 'Josue Cabrera', '2024-07-18', '2024-08-18', ''),
+(16, 202, 'Ratas', '2024-07-21', '2025-07-21', ''),
+(31, 110, 'Jorge Chavez', '2024-07-22', '2024-07-22', ''),
+(34, 102, 'HOMERO SIMPSON', '2024-07-22', '2024-08-05', '');
 
 -- --------------------------------------------------------
 
@@ -52,10 +59,10 @@ INSERT INTO `cliente` (`idcliente`, `nombre`, `telefono`, `direccion`) VALUES
 
 CREATE TABLE `configuracion` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `direccion` text COLLATE utf8_spanish_ci NOT NULL
+  `nombre` varchar(100) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `direccion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -75,17 +82,19 @@ CREATE TABLE `detalle_permisos` (
   `id` int(11) NOT NULL,
   `id_permiso` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_permisos`
 --
 
 INSERT INTO `detalle_permisos` (`id`, `id_permiso`, `id_usuario`) VALUES
-(35, 3, 9),
-(36, 4, 9),
-(37, 5, 9),
-(38, 6, 9);
+(55, 1, 9),
+(56, 2, 9),
+(57, 3, 9),
+(58, 4, 9),
+(59, 5, 9),
+(60, 6, 9);
 
 -- --------------------------------------------------------
 
@@ -117,27 +126,7 @@ CREATE TABLE `detalle_venta` (
   `descuento` decimal(10,2) NOT NULL DEFAULT 0.00,
   `precio` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `detalle_venta`
---
-
-INSERT INTO `detalle_venta` (`id`, `id_producto`, `id_venta`, `cantidad`, `descuento`, `precio`, `total`) VALUES
-(1, 1, 1, 10, '200.00', '1500.00', '14800.00'),
-(2, 2, 1, 2, '100.00', '800.00', '1500.00'),
-(3, 2, 2, 15, '0.00', '800.00', '12000.00'),
-(4, 1, 3, 5, '50.00', '1500.00', '7450.00'),
-(5, 2, 3, 1, '10.00', '800.00', '790.00'),
-(6, 3, 3, 2, '100.00', '500.00', '900.00'),
-(7, 3, 4, 9, '300.00', '500.00', '17700.00'),
-(8, 4, 4, 2, '150.00', '3000.00', '5850.00'),
-(9, 5, 5, 8, '100.00', '350.00', '2700.00'),
-(10, 4, 5, 1, '200.00', '3000.00', '2800.00'),
-(11, 1, 6, 1, '50.00', '1500.00', '1450.00'),
-(12, 4, 6, 3, '520.00', '3000.00', '8480.00'),
-(13, 3, 6, 1, '0.00', '500.00', '500.00'),
-(14, 4, 7, 3, '10.00', '3000.00', '8990.00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -148,7 +137,7 @@ INSERT INTO `detalle_venta` (`id`, `id_producto`, `id_venta`, `cantidad`, `descu
 CREATE TABLE `permisos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
@@ -170,8 +159,7 @@ INSERT INTO `permisos` (`id`, `nombre`) VALUES
 
 CREATE TABLE `producto` (
   `codproducto` int(11) NOT NULL,
-  `codigo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `descripcion` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   `existencia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -180,13 +168,10 @@ CREATE TABLE `producto` (
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`codproducto`, `codigo`, `descripcion`, `precio`, `existencia`) VALUES
-(1, '123456', 'Televisor Lg', '1500.00', 34),
-(2, '13256445', 'Celular Lg', '800.00', 2),
-(3, '97879846', 'Impresora epson L300', '500.00', 3),
-(4, '978798', 'Computadora Lenovo', '3000.00', 41),
-(5, '7977989', 'Scanner', '350.00', 4),
-(6, '78879978', 'Arroz Trujillo', '15.00', 60);
+INSERT INTO `producto` (`codproducto`, `descripcion`, `precio`, `existencia`) VALUES
+(7, 'OFF! REPELENTE', 85.00, 5),
+(8, 'MOSQUITERO CAMA', 299.00, 13),
+(9, 'MOSQUITERO VENTANA', 199.00, 5);
 
 -- --------------------------------------------------------
 
@@ -196,10 +181,10 @@ INSERT INTO `producto` (`codproducto`, `codigo`, `descripcion`, `precio`, `exist
 
 CREATE TABLE `usuario` (
   `idusuario` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `correo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `usuario` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `clave` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `usuario` varchar(20) NOT NULL,
+  `clave` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -207,8 +192,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `correo`, `usuario`, `clave`) VALUES
-(1, 'Sistemas Free', 'ana.info1999@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3'),
-(9, 'Maria Sanchez', 'maria@gmail.com', 'maria', '263bce650e68ab4e23f28263760b9fa5');
+(9, 'Josue', 'josue.info1999@gmail.com', 'admin', '123456789gym');
 
 -- --------------------------------------------------------
 
@@ -222,20 +206,7 @@ CREATE TABLE `ventas` (
   `total` decimal(10,2) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `ventas`
---
-
-INSERT INTO `ventas` (`id`, `id_cliente`, `total`, `id_usuario`, `fecha`) VALUES
-(1, 1, '16300.00', 1, '2021-08-09 21:01:45'),
-(2, 1, '12000.00', 1, '2021-08-09 21:05:02'),
-(3, 1, '9140.00', 1, '2021-08-09 21:10:23'),
-(4, 1, '23550.00', 1, '2021-08-10 01:09:24'),
-(5, 2, '5500.00', 1, '2021-08-10 01:25:27'),
-(6, 1, '10430.00', 1, '2021-08-10 21:27:09'),
-(7, 1, '8990.00', 9, '2021-08-10 21:31:50');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -245,7 +216,7 @@ INSERT INTO `ventas` (`id`, `id_cliente`, `total`, `id_usuario`, `fecha`) VALUES
 -- Indices de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`idcliente`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `configuracion`
@@ -311,7 +282,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion`
@@ -323,19 +294,19 @@ ALTER TABLE `configuracion`
 -- AUTO_INCREMENT de la tabla `detalle_permisos`
 --
 ALTER TABLE `detalle_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_temp`
 --
 ALTER TABLE `detalle_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -347,7 +318,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `codproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `codproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -359,7 +330,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
@@ -390,7 +361,7 @@ ALTER TABLE `detalle_venta`
 -- Filtros para la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
