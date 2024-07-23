@@ -11,7 +11,7 @@ if (empty($existe) && $id_user != 1) {
 
 if (!empty($_POST)) {
     $alert = "";
-    if (empty($_POST['idcliente']) || empty($_POST['nombre']) || empty($_POST['mes_registro']) || empty($_POST['mes_vencimiento'])) {
+    if (empty($_POST['idcliente']) || empty($_POST['nombre'])) {
         $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         Todo los campos son obligatorio
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -19,12 +19,14 @@ if (!empty($_POST)) {
                         </button>
                     </div>';
     } else {
+        date_default_timezone_set('America/Mexico_City');
         $id = $_POST['id'];
         $idcliente = $_POST['idcliente'];
         $nombre = $_POST['nombre'];
-        $mes_registro = $_POST['mes_registro'];
-        $mes_vencimiento = $_POST['mes_vencimiento'];
+        $mes_registro = date("Y-m-d");
+        $mes_vencimiento = new DateTime();
         $result = 0;
+
         if (empty($id)) {
 
             if ($idcliente) {
@@ -38,8 +40,32 @@ if (!empty($_POST)) {
                     </button>
                 </div>';
                 } else {
-                    $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$mes_vencimiento', '')");
-
+                    $periodo = $_POST['periodo'];
+                    //echo "Ha seleccionado: " . htmlspecialchars($periodo);
+                    if (htmlspecialchars($periodo) == "semana") {
+                        $mes_vencimiento->modify('+7 days');
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                    } else if (htmlspecialchars($periodo) == "visita") {
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                    } else if (htmlspecialchars($periodo) == "quincena") {
+                        $mes_vencimiento->modify('+14 days');
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                    } else if (htmlspecialchars($periodo) == "mensualidad") {
+                        $mes_vencimiento->modify('+1 month');
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                        var_dump($fechaVencimiento);
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                    } else if (htmlspecialchars($periodo) == "anualidad") {
+                        $mes_vencimiento->modify('+1 year');
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                    }
+                    /*var_dump( $fechaVencimiento);
+                    $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+*/
                     if ($query_insert) {
                         $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
                             Cliente registrado
@@ -82,6 +108,7 @@ if (!empty($_POST)) {
 }
 include_once "includes/header.php";
 ?>
+
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -99,20 +126,21 @@ include_once "includes/header.php";
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="telefono" class="text-dark font-weight-bold">Nombre</label>
+                                <br>
                                 <input type="text" placeholder="Ingrese Nombre" name="nombre" id="nombre" class="form-control">
                             </div>
 
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <label for="direccion" class="text-dark font-weight-bold">Fecha Registro</label>
-                                <input type="date" name="mes_registro" id="mes_registro" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="direccion" class="text-dark font-weight-bold">Fecha Vencimiento</label>
-                                <input type="date" name="mes_vencimiento" id="mes_vencimiento" class="form-control">
+                                <p for="periodo">Seleccione un período:</p>
+                                <select class="custom-select" id="periodo" name="periodo">
+                                    <option value="visita">Visita</option>
+                                    <option value="semana">Semana</option>
+                                    <option value="quincena">Quincena</option>
+                                    <option value="mensualidad">Mensualidad</option>
+                                    <option value="anualidad">Anualidad</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4 mt-3">
@@ -127,7 +155,7 @@ include_once "includes/header.php";
                     <table class="table table-striped table-bordered" id="tbl">
                         <thead class="thead-dark">
                             <tr>
-                                
+
                                 <th>ID Socio</th>
                                 <th>Nombre</th>
                                 <th>Fecha Registro</th>
@@ -144,7 +172,7 @@ include_once "includes/header.php";
                             if ($result > 0) {
                                 while ($data = mysqli_fetch_assoc($query)) { ?>
                                     <tr>
-                                        
+
                                         <td><?php echo $data['idcliente']; ?></td>
                                         <td><?php echo $data['nombre']; ?></td>
                                         <td><?php echo $data['mes_registro']; ?></td>
