@@ -62,10 +62,11 @@ if (!empty($_POST)) {
                         $mes_vencimiento->modify('+1 year');
                         $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
                         $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                    }else if (htmlspecialchars($periodo) == "semestre") {
+                        $mes_vencimiento->modify('+6 month');
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
                     }
-                    /*var_dump( $fechaVencimiento);
-                    $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
-*/
                     if ($query_insert) {
                         $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
                             Cliente registrado
@@ -85,7 +86,7 @@ if (!empty($_POST)) {
             }
         } else {
 
-            $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$mes_vencimiento' WHERE id = '$id'");
+            $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$mes_vencimiento' WHERE idcliente = '$idcliente'");
 
             if ($sql_update) {
                 $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -139,6 +140,7 @@ include_once "includes/header.php";
                                     <option value="semana">Semana</option>
                                     <option value="quincena">Quincena</option>
                                     <option value="mensualidad">Mensualidad</option>
+                                    <option value="semestre">Semetre</option>
                                     <option value="anualidad">Anualidad</option>
                                 </select>
                             </div>
@@ -178,7 +180,7 @@ include_once "includes/header.php";
                                         <td><?php echo $data['mes_registro']; ?></td>
                                         <td><?php echo $data['mes_vencimiento']; ?></td>
                                         <td>
-                                            <a href="#" onclick="editarCliente(<?php echo $data['id']; ?>)" class="btn btn-primary"><i class='fas fa-edit'></i></a>
+                                            <a href="#" onclick="editarCliente(<?php echo $data['idcliente']; ?>)" class="btn btn-primary"><i class='fas fa-edit'></i></a>
                                             <form action="eliminar_cliente.php?id=<?php echo $data['id']; ?>" method="post" class="confirmar d-inline">
                                                 <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
                                             </form>

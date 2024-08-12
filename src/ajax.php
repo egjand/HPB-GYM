@@ -119,7 +119,7 @@ switch ($action) {
         break;
 
     case 'editarCliente':
-        $id = $_GET['id'];
+        $id = $_GET['idcliente'];
         $sql = mysqli_query($conexion, "SELECT * FROM cliente WHERE id = $id");
         $data = mysqli_fetch_array($sql);
         echo json_encode($data);

@@ -462,18 +462,21 @@ function btnCambiar(e) {
     }
 }
 
-function editarCliente(id) {
+function editarCliente(idcliente) {
     const action = "editarCliente";
-    console.log(id);
+   
     $.ajax({
         url: 'ajax.php',
         type: 'GET',
         async: true,
         data: {
             editarCliente: action,
-            id: id
+            idcliente: idcliente
+            
         },
         success: function (response) {
+            
+            try {
             const datos = JSON.parse(response);
             $('#idcliente').val(datos.idcliente);
             $('#nombre').val(datos.nombre);
@@ -481,6 +484,9 @@ function editarCliente(id) {
             $('#mes_vencimiento').val(datos.mes_vencimiento);
             $('#id').val(datos.id);
             $('#btnAccion').val('Modificar');
+            } catch (e) {
+                console.error('JSON mal formado:', e);
+            }
             
         },
         
@@ -488,6 +494,7 @@ function editarCliente(id) {
             console.log(error);
 
         }
+        
     });
 }
 

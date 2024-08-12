@@ -10,7 +10,7 @@ if (empty($existe) && $id_user != 1) {
 }
 include_once "includes/header.php";
 
-$id = $_POST['id'];
+
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -26,8 +26,7 @@ $id = $_POST['id'];
                     <div class="col-lg-5">
                         <div class="form-group">
                             <label for="id">Código del socio</label>
-                            <input id="id" class="form-control" type="text" name="id" placeholder="Ingresa el código de socio" onkeydown="if(event.keyCode == 13) { buscarSocio(); }">
-
+                            <input id="id-socio" class="form-control" type="text" name="id-socio" placeholder="Ingresa el código de socio" onkeypress="return isNumberKey(event)" onkeydown="if(event.keyCode == 13) { buscarSocio(); }">
                         </div>
                     </div>
                     <div class="col-lg-2">
@@ -73,12 +72,13 @@ $id = $_POST['id'];
         position: fixed;
         width: 60%;
         left: 20%;
-        top: 20%;
-        padding: 20px 2%;
+        top: 30%;
+        padding: 114px 2%;
         font-family: Calibri, Arial, sans-serif;
         background: #FFF;
         overflow: auto;
         transition: background-color 0.5s;
+        border-radius: 15px;
     }
 
     #fvpp-close {
@@ -92,14 +92,19 @@ $id = $_POST['id'];
     }
 
     .error-message {
-        font-size: 30px; /* Tamaño de fuente más grande para el mensaje de error */
-        color: red; /* Opcional: color rojo para destacar el mensaje */
-        text-align: center; /* Centrar el texto */
-        padding: 20px; /* Espaciado alrededor del texto */
+        font-size: 30px;
+        /* Tamaño de fuente más grande para el mensaje de error */
+        color: red;
+        /* Opcional: color rojo para destacar el mensaje */
+        text-align: center;
+        /* Centrar el texto */
+        padding: 20px;
+        /* Espaciado alrededor del texto */
     }
 
     .data-table {
-        font-size: 20px; /* Tamaño de fuente para los datos */
+        font-size: 20px;
+        /* Tamaño de fuente para los datos */
     }
 </style>
 <!-- /modal popup -->
@@ -107,7 +112,8 @@ $id = $_POST['id'];
 <!-- El modal -->
 <div id="fvpp-blackout"></div>
 <div id="my-welcome-message">
-    <a id="fvpp-close">✖</a>
+    
+    <button id="fvpp-close" onclick="limpiarInput()">X</button>
     <h2>Bienvenido!</h2>
     <div id="modal-content">
         <!-- Los datos del socio se cargarán aquí -->
@@ -117,10 +123,10 @@ $id = $_POST['id'];
 
 <?php include_once "includes/footer.php"; ?>
 <script>
-    var blinkInterval; 
+    var blinkInterval;
 
     function buscarSocio() {
-        var codigoSocio = document.getElementById('id').value.trim();
+        var codigoSocio = document.getElementById('id-socio').value.trim();
 
         if (codigoSocio !== '') {
             var xhr = new XMLHttpRequest();
@@ -147,11 +153,11 @@ $id = $_POST['id'];
                             tableHtml += '</tr>';
                         });
                         tableHtml += '</tbody></table>';
-                        
+
                         var modal = document.getElementById('my-welcome-message');
                         if (estado === 'Socio Deudor') {
-                            modal.style.backgroundColor = 'rgba(255, 111, 0, 0.5)';
-                            startBlinking();
+                            modal.style.backgroundColor = 'rgba(219, 95, 68)';
+                            //startBlinking();
                         } else {
                             modal.style.backgroundColor = 'rgba(255, 255, 255, 1)';
                             stopBlinking();
@@ -177,9 +183,9 @@ $id = $_POST['id'];
 
         function toggleColor() {
             if (count * interval < duration) {
-                modal.style.backgroundColor = modal.style.backgroundColor === 'rgba(255, 0, 0, 0.5)' 
-                    ? 'rgba(0, 0, 255, 0.5)' 
-                    : 'rgba(255, 0, 0, 0.5)';
+                modal.style.backgroundColor = modal.style.backgroundColor === 'rgba(255, 0, 0, 0.5)' ?
+                    'rgba(0, 0, 255, 0.5)' :
+                    'rgba(255, 0, 0, 0.5)';
                 count++;
             } else {
                 clearInterval(blinkInterval);
@@ -199,10 +205,18 @@ $id = $_POST['id'];
     document.getElementById('fvpp-close').onclick = function() {
         document.getElementById('my-welcome-message').style.display = 'none';
         document.getElementById('fvpp-blackout').style.display = 'none';
+        document.getElementById('id-socio').innerHTML = '';
+        var input = document.getElementById('id-socio');
+            input.value = '';
     };
 
     document.getElementById('fvpp-blackout').onclick = function() {
         document.getElementById('my-welcome-message').style.display = 'none';
         document.getElementById('fvpp-blackout').style.display = 'none';
     };
+    function isNumberKey(evt) {
+    var charCode = evt.which ? evt.which : evt.keyCode;
+    return !(charCode < 48 || charCode > 57); // Permitir solo números
+}
+    
 </script>
