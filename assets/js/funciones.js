@@ -470,7 +470,7 @@ function editarCliente(idcliente) {
         type: 'GET',
         async: true,
         data: {
-            editarCliente: action,
+            action: action,
             idcliente: idcliente
             
         },

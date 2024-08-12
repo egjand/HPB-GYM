@@ -25,6 +25,7 @@ if (!empty($_POST)) {
         $nombre = $_POST['nombre'];
         $mes_registro = date("Y-m-d");
         $mes_vencimiento = new DateTime();
+        $huella = 'huella';
         $result = 0;
 
         if (empty($id)) {
@@ -41,31 +42,29 @@ if (!empty($_POST)) {
                 </div>';
                 } else {
                     $periodo = $_POST['periodo'];
-                    //echo "Ha seleccionado: " . htmlspecialchars($periodo);
                     if (htmlspecialchars($periodo) == "semana") {
                         $mes_vencimiento->modify('+7 days');
-                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
-                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                        $fechaVencimiento = $mes_vencimiento->format('Y-m-d'); 
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', $huella)");
                     } else if (htmlspecialchars($periodo) == "visita") {
                         $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
-                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', $huella)");
                     } else if (htmlspecialchars($periodo) == "quincena") {
                         $mes_vencimiento->modify('+14 days');
                         $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
-                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', $huella)");
                     } else if (htmlspecialchars($periodo) == "mensualidad") {
                         $mes_vencimiento->modify('+1 month');
                         $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
-                        var_dump($fechaVencimiento);
-                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', $huella)");
                     } else if (htmlspecialchars($periodo) == "anualidad") {
                         $mes_vencimiento->modify('+1 year');
                         $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
-                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', $huella)");
                     }else if (htmlspecialchars($periodo) == "semestre") {
                         $mes_vencimiento->modify('+6 month');
                         $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
-                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', '')");
+                        $query_insert = mysqli_query($conexion, "INSERT INTO cliente(idcliente,nombre,mes_registro,mes_vencimiento,huella) values ('$idcliente','$nombre', '$mes_registro', '$fechaVencimiento', $huella)");
                     }
                     if ($query_insert) {
                         $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -85,8 +84,31 @@ if (!empty($_POST)) {
                 }
             }
         } else {
-
-            $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$mes_vencimiento' WHERE idcliente = '$idcliente'");
+            $periodo = $_POST['periodo'];
+            if (htmlspecialchars($periodo) == "semana") {
+                $mes_vencimiento->modify('+7 days');
+                $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$fechaVencimiento' WHERE idcliente = '$idcliente'");
+            } else if (htmlspecialchars($periodo) == "visita") {
+                $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$fechaVencimiento' WHERE idcliente = '$idcliente'");
+            } else if (htmlspecialchars($periodo) == "quincena") {
+                $mes_vencimiento->modify('+14 days');
+                $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$fechaVencimiento' WHERE idcliente = '$idcliente'");
+            } else if (htmlspecialchars($periodo) == "mensualidad") {
+                $mes_vencimiento->modify('+1 month');
+                $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$fechaVencimiento' WHERE idcliente = '$idcliente'");
+            } else if (htmlspecialchars($periodo) == "anualidad") {
+                $mes_vencimiento->modify('+1 year');
+                $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$fechaVencimiento' WHERE idcliente = '$idcliente'");
+            }else if (htmlspecialchars($periodo) == "semestre") {
+                $mes_vencimiento->modify('+6 month');
+                $fechaVencimiento = $mes_vencimiento->format('Y-m-d');
+                $sql_update = mysqli_query($conexion, "UPDATE cliente SET  idcliente = '$idcliente' , nombre = '$nombre', mes_registro = '$mes_registro', mes_vencimiento = '$fechaVencimiento' WHERE idcliente = '$idcliente'");
+            }
 
             if ($sql_update) {
                 $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">

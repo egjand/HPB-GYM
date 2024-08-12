@@ -120,7 +120,7 @@ switch ($action) {
 
     case 'editarCliente':
         $id = $_GET['idcliente'];
-        $sql = mysqli_query($conexion, "SELECT * FROM cliente WHERE id = $id");
+        $sql = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $id");
         $data = mysqli_fetch_array($sql);
         echo json_encode($data);
         exit;
@@ -197,7 +197,7 @@ switch ($action) {
         break;
 
     default:
-        echo "Acción no válida";
+        echo  json_encode("Acción no válida");
         die();
 }
 ?>
