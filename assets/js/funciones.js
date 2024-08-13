@@ -554,3 +554,8 @@ function limpiar() {
     $('#id').val('');
     $('#btnAccion').val('Registrar');
 }
+
+function isNumberKey(evt) {
+    var charCode = evt.which ? evt.which : evt.keyCode;
+    return !(charCode < 48 || charCode > 57); // Permitir solo números
+}

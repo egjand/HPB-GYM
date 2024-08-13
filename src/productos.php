@@ -10,7 +10,7 @@ if (empty($existe) && $id_user != 1) {
 }
 if (!empty($_POST)) {
     $alert = "";
-    $id = $_POST['id'];
+    //$id = $_POST['id'];
     $producto = $_POST['producto'];
     $precio = $_POST['precio'];
     $cantidad = $_POST['cantidad'];

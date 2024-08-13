@@ -142,7 +142,7 @@ include_once "includes/header.php";
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="nombre" class="text-dark font-weight-bold">ID Socio</label>
-                                <input type="text" name="idcliente" id="idcliente" class="form-control">
+                                <input type="text" onkeypress="return isNumberKey(event)" name="idcliente" id="idcliente" class="form-control">
                                 <input type="hidden" name="id" id="id">
                             </div>
                         </div>
@@ -162,7 +162,7 @@ include_once "includes/header.php";
                                     <option value="semana">Semana</option>
                                     <option value="quincena">Quincena</option>
                                     <option value="mensualidad">Mensualidad</option>
-                                    <option value="semestre">Semestre</option>
+                                    <option value="semestre">Semes tre</option>
                                     <option value="anualidad">Anualidad</option>
                                 </select>
                             </div>
@@ -218,4 +218,10 @@ include_once "includes/header.php";
         </div>
     </div>
 </div>
+<script>
+    function isNumberKey(evt) {
+    var charCode = evt.which ? evt.which : evt.keyCode;
+    return !(charCode < 48 || charCode > 57); // Permitir solo números
+    }
+    </script>
 <?php include_once "includes/footer.php"; ?>

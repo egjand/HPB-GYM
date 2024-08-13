@@ -13,7 +13,7 @@ include_once "includes/header.php";
 ?>
 <!-- Content Row -->
 <div class="row" >
-    <div>
+    <div class="row">
    <img src="../assets/img/hpbgym.png" alt="" >
    </div>
 </div>

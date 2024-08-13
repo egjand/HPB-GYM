@@ -70,9 +70,9 @@ include_once "includes/header.php";
         display: none;
         z-index: 500;
         position: fixed;
-        width: 60%;
-        left: 20%;
-        top: 30%;
+        width: 59%;
+        left: 26%;
+        top: 23%;
         padding: 114px 2%;
         font-family: Calibri, Arial, sans-serif;
         background: #FFF;
@@ -82,13 +82,14 @@ include_once "includes/header.php";
     }
 
     #fvpp-close {
-        position: absolute;
-        top: 10px;
-        right: 20px;
+        position: relative;
+        top: 100px;
+        left: 410px;
         cursor: pointer;
-        padding: 2px 16px;
+        padding: 15px 55px;
         background-color: #5cb85c;
         color: white;
+        font-size: 18px;
     }
 
     .error-message {
@@ -106,18 +107,102 @@ include_once "includes/header.php";
         font-size: 20px;
         /* Tamaño de fuente para los datos */
     }
+
+    .msg-welcome {
+        position: relative;
+        font-family: 'Arial', sans-serif;
+        /* Fuente legible y moderna */
+        font-size: 40px;
+        /* Tamaño de fuente cómodo */
+        font-weight: bold;
+        /* Negrita para destacar */
+        color: #333333;
+        /* Color de texto oscuro pero suave */
+        margin-top: 20px;
+        /* Espacio superior */
+        margin-bottom: 15px;
+        /* Espacio inferior */
+        text-align: center;
+        /* Centrar el texto */
+        line-height: 1.4;
+        /* Altura de línea para mejor legibilidad */
+        letter-spacing: 1px;
+        /* Espaciado entre letras */
+        text-transform: uppercase;
+        /* Convertir texto a mayúsculas */
+        border-bottom: 2px solid #cccccc;
+        /* Línea debajo del título */
+        padding-bottom: 10px;
+        /* Espaciado debajo del texto */
+
+    }
+
+    .row {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    .cell-nombre {
+        margin: 5px 0;
+        position: relative;
+        left: 10px;
+        font-size: 30px;
+    }
+    .cell-mes{
+        margin: 5px 0;
+        position: relative;
+        left: 80px;
+        font-size: 30px;
+    }
+    .cell-estado{
+        margin: 5px 0;
+        position: relative;
+        left: 160px;
+        font-size: 30px;
+    }
+
+    .notification {
+    background-color: #fafafa; /* Fondo azul claro */
+    color: #000000; /* Texto azul oscuro */
+    border-left: 4px solid #000000; /* Borde azul */
+    padding: 15px; /* Espaciado interno */
+    margin-bottom: 20px; /* Espacio debajo del div */
+    border-radius: 5px; /* Esquinas redondeadas */
+    font-family: 'Arial', sans-serif; /* Fuente */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+.notification:hover {
+    background-color: #f7caca; /* Fondo un poco más oscuro al pasar el ratón */
+}
+
+.notification .title {
+    font-weight: bold; /* Título en negrita */
+    margin-bottom: 5px; /* Espacio debajo del título */
+    font-size: 1.2em; /* Tamaño del título */
+}
+
+.notification .message {
+    margin: 0; /* Sin margen adicional */
+    font-size: 1em; /* Tamaño del texto */
+    line-height: 1.5; /* Altura de línea */
+}
+
 </style>
 <!-- /modal popup -->
 
 <!-- El modal -->
 <div id="fvpp-blackout"></div>
 <div id="my-welcome-message">
+
     
-    <button id="fvpp-close" onclick="limpiarInput()">X</button>
-    <h2>Bienvenido!</h2>
-    <div id="modal-content">
+    
+    <div id="modal-content" class="notification">
         <!-- Los datos del socio se cargarán aquí -->
     </div>
+    <button id="fvpp-close" onclick="limpiarInput()">ACEPTAR</button>
 </div>
 <!-- /el modal -->
 
@@ -146,11 +231,12 @@ include_once "includes/header.php";
                     } else {
                         tableHtml = '<table class="table table-hover"><tbody>';
                         rows.forEach(function(row) {
-                            tableHtml += '<tr>';
-                            tableHtml += '<td>' + row.nombre + '</td>';
-                            tableHtml += '<td>' + row.mes_vencimiento + '</td>';
-                            tableHtml += '<td>' + row.estado + '</td>';
-                            tableHtml += '</tr>';
+                            tableHtml += '<h2 class="msg-welcome">Bienvenido!</h2>';
+                            tableHtml += '<div class="row">';
+                            tableHtml += '<div class="cell-nombre">' + row.nombre + '</div>';
+                            tableHtml += '<div class="cell-mes">' + row.mes_vencimiento + '</div>';
+                            tableHtml += '<div class="cell-estado">' + row.estado + '</div>';
+                            tableHtml += '</div>';
                         });
                         tableHtml += '</tbody></table>';
 
@@ -207,16 +293,16 @@ include_once "includes/header.php";
         document.getElementById('fvpp-blackout').style.display = 'none';
         document.getElementById('id-socio').innerHTML = '';
         var input = document.getElementById('id-socio');
-            input.value = '';
+        input.value = '';
     };
 
     document.getElementById('fvpp-blackout').onclick = function() {
         document.getElementById('my-welcome-message').style.display = 'none';
         document.getElementById('fvpp-blackout').style.display = 'none';
     };
+
     function isNumberKey(evt) {
-    var charCode = evt.which ? evt.which : evt.keyCode;
-    return !(charCode < 48 || charCode > 57); // Permitir solo números
-}
-    
+        var charCode = evt.which ? evt.which : evt.keyCode;
+        return !(charCode < 48 || charCode > 57); // Permitir solo números
+    }
 </script>
