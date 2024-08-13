@@ -162,7 +162,7 @@ include_once "includes/header.php";
                                     <option value="semana">Semana</option>
                                     <option value="quincena">Quincena</option>
                                     <option value="mensualidad">Mensualidad</option>
-                                    <option value="semestre">Semetre</option>
+                                    <option value="semestre">Semestre</option>
                                     <option value="anualidad">Anualidad</option>
                                 </select>
                             </div>

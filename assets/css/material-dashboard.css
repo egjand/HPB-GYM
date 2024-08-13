@@ -2204,7 +2204,7 @@ pre code {
 
 .table .thead-dark th {
   color: #fafafa;
-  background-color: #212529;
+  background-color: #d92727;
   border-color: #32383e;
 }
 
@@ -13934,8 +13934,8 @@ fieldset[disabled] .form-group .form-control {
 }
 
 .navbar.bg-dark {
-  color: #fff;
-  background-color: #212121 !important;
+  color: #fafafa;
+  background-color: #d92727 !important;
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(33, 33, 33, 0.46);
 }
 
