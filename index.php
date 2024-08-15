@@ -26,7 +26,6 @@ if (!empty($_POST)) {
 
         $user1 =$_POST['usuario'];
         $pass =$_POST['clave'];
-        var_dump('puto' . $user , $clave);
         // Realiza la consulta
         $query = mysqli_query($conexion, "SELECT * FROM usuario WHERE usuario = '$user1' AND clave = '$pass'");
 
