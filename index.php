@@ -80,7 +80,7 @@ if (!empty($_POST)) {
     <div style="display: flex;justify-content: center; align-items: center; height: 100vh;">
         <div class="container">
             <center>
-                <img src="assets/img/Screenshot_1.png" alt="" class="img-class">
+                <img src="assets/img/logo-punto-fitness-blanco-login.png" alt="" class="img-class">
             </center>
             <form action="" id="login-form" method="POST">
                 <div class="user-details">

@@ -72,7 +72,7 @@ include_once "includes/header.php";
         position: fixed;
         width: 59%;
         left: 26%;
-        top: 23%;
+        top: 20%;
         padding: 114px 2%;
         font-family: Calibri, Arial, sans-serif;
         background: #FFF;
@@ -90,6 +90,7 @@ include_once "includes/header.php";
         background-color: #5cb85c;
         color: white;
         font-size: 18px;
+        border-radius: 20px;
     }
 
     .error-message {
@@ -149,13 +150,41 @@ include_once "includes/header.php";
         left: 10px;
         font-size: 30px;
     }
-    .cell-mes{
+
+    .cell-nombre-deudor {
+        margin: 10px 15px 20px 25px;
+        position: absolute;
+        left: 430px;
+        top: 180px;
+        font-size: 30px;
+    }
+
+    .cell-estado-deudor {
+        margin: 10px 15px 20px 25px;
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        position: absolute;
+        left: 385px;
+        top: 111px;
+        font-size: 50px;
+    }
+    .mensaje{
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        position: absolute;
+        left: 235px;
+        top: 125px;
+        font-size: 40px;
+    }
+
+    .cell-mes {
         margin: 5px 0;
         position: relative;
         left: 80px;
         font-size: 30px;
     }
-    .cell-estado{
+
+    .cell-estado {
         margin: 5px 0;
         position: relative;
         left: 160px;
@@ -163,33 +192,43 @@ include_once "includes/header.php";
     }
 
     .notification {
-    background-color: #fafafa; /* Fondo azul claro */
-    color: #000000; /* Texto azul oscuro */
-    border-left: 4px solid #000000; /* Borde azul */
-    padding: 15px; /* Espaciado interno */
-    margin-bottom: 20px; /* Espacio debajo del div */
-    border-radius: 5px; /* Esquinas redondeadas */
-    font-family: 'Arial', sans-serif; /* Fuente */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
-}
+        background-color: #fafafa;
+        /* Fondo azul claro */
+        color: #000000;
+        /* Texto azul oscuro */
+        border-left: 4px solid #000000;
+        /* Borde azul */
+        padding: 25px;
+        /* Espaciado interno */
+        margin-bottom: 0px;
+        /* Espacio debajo del div */
+        border-radius: 5px;
+        /* Esquinas redondeadas */
+        font-family: 'Arial', sans-serif;
+        /* Fuente */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        /* Sombra ligera */
+        transition: background-color 0.3s ease;
+        /* Transición suave al cambiar de color */
+    }
 
-.notification:hover {
-    background-color: #f7caca; /* Fondo un poco más oscuro al pasar el ratón */
-}
+    .notification .title {
+        font-weight: bold;
+        /* Título en negrita */
+        margin-bottom: 5px;
+        /* Espacio debajo del título */
+        font-size: 1.2em;
+        /* Tamaño del título */
+    }
 
-.notification .title {
-    font-weight: bold; /* Título en negrita */
-    margin-bottom: 5px; /* Espacio debajo del título */
-    font-size: 1.2em; /* Tamaño del título */
-}
-
-.notification .message {
-    margin: 0; /* Sin margen adicional */
-    font-size: 1em; /* Tamaño del texto */
-    line-height: 1.5; /* Altura de línea */
-}
-
+    .notification .message {
+        margin: 0;
+        /* Sin margen adicional */
+        font-size: 1em;
+        /* Tamaño del texto */
+        line-height: 1.5;
+        /* Altura de línea */
+    }
 </style>
 <!-- /modal popup -->
 
@@ -197,8 +236,8 @@ include_once "includes/header.php";
 <div id="fvpp-blackout"></div>
 <div id="my-welcome-message">
 
-    
-    
+
+
     <div id="modal-content" class="notification">
         <!-- Los datos del socio se cargarán aquí -->
     </div>
@@ -226,28 +265,34 @@ include_once "includes/header.php";
 
                     var tableHtml = '';
                     if (estado === 'No Encontrado') {
-                        tableHtml = '<p>' + message + '</p>';
+                        tableHtml = '<p class="mensaje">' + message + '</p>';
                         stopBlinking(); // Detener parpadeo si hay mensaje de error
                     } else {
-                        tableHtml = '<table class="table table-hover"><tbody>';
+
                         rows.forEach(function(row) {
-                            tableHtml += '<h2 class="msg-welcome">Bienvenido!</h2>';
-                            tableHtml += '<div class="row">';
-                            tableHtml += '<div class="cell-nombre">' + row.nombre + '</div>';
-                            tableHtml += '<div class="cell-mes">' + row.mes_vencimiento + '</div>';
-                            tableHtml += '<div class="cell-estado">' + row.estado + '</div>';
-                            tableHtml += '</div>';
+                            if (estado === 'Socio Deudor') {
+                                tableHtml += '<div class="cell-estado-deudor" style="color = "red"">' + row.estado + '</div>';
+                                tableHtml += '<div class="cell-nombre-deudor">' + row.nombre + '</div>';
+                            } else {
+                                tableHtml = '<table class="table table-hover"><tbody>';
+                                tableHtml += '<h2 class="msg-welcome">Bienvenido!</h2>';
+                                tableHtml += '<div class="row">';
+                                tableHtml += '<div class="cell-nombre">' + row.nombre + '</div>';
+                                tableHtml += '<div class="cell-mes">' + row.mes_vencimiento + '</div>';
+                                tableHtml += '<div class="cell-estado">' + row.estado + '</div>';
+                                tableHtml += '</div>';
+                            }
                         });
                         tableHtml += '</tbody></table>';
 
-                        var modal = document.getElementById('my-welcome-message');
-                        if (estado === 'Socio Deudor') {
-                            modal.style.backgroundColor = 'rgba(219, 95, 68)';
+
+                        /*if (estado === 'Socio Deudor') {
+                            modal.style.backgroundColor = 'rgb(217, 39, 39)';
                             //startBlinking();
                         } else {
                             modal.style.backgroundColor = 'rgba(255, 255, 255, 1)';
                             stopBlinking();
-                        }
+                        }*/
                     }
 
                     document.getElementById('modal-content').innerHTML = tableHtml;

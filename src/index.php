@@ -12,10 +12,18 @@ session_start();
 include_once "includes/header.php";
 ?>
 <!-- Content Row -->
-<div class="row" >
-    <div class="row">
-   <img src="../assets/img/hpbgym.png" alt="" >
-   </div>
+<div class="row">
+    <img src="../assets/img/logo-punto-fitness-blanco-login.png" alt="" class="fondo">
 </div>
+
+<style>
+    .fondo {
+       
+        height: 890px;
+        /* Hace que la imagen abarque el 100% de la altura de la pantalla */
+        width: 1600px;
+        /* Hace que la imagen abarque el 100% del ancho de la pantalla */
+    }
+</style>
 
 <?php include_once "includes/footer.php"; ?>

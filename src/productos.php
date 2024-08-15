@@ -90,7 +90,6 @@ include_once "includes/header.php";
                 <table class="table table-striped table-bordered" id="tbl">
                     <thead class="thead-dark">
                         <tr>
-                            <th>#</th>
                             <th>Producto</th>
                             <th>Precio</th>
                             <th>Stock</th>
@@ -106,7 +105,6 @@ include_once "includes/header.php";
                         if ($result > 0) {
                             while ($data = mysqli_fetch_assoc($query)) { ?>
                                 <tr>
-                                    <td><?php echo $data['codproducto']; ?></td>
                                     <td><?php echo $data['descripcion']; ?></td>
                                     <td><?php echo $data['precio']; ?></td>
                                     <td id="stock_<?php echo $data['codproducto']; ?>"><?php echo $data['existencia']; ?></td>
