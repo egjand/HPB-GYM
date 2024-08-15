@@ -29,12 +29,12 @@ include_once "includes/header.php";
                             <input id="id-socio" class="form-control" type="text" name="id-socio" placeholder="Ingresa el código de socio" onkeypress="return isNumberKey(event)" onkeydown="if(event.keyCode == 13) { buscarSocio(); }">
                         </div>
                     </div>
-                    <div class="col-lg-2">
+                    <!--<div class="col-lg-2">
                         <div class="form-group">
                             <label for="huella">Huella</label>
                             <input id="huella" class="form-control" type="text" name="huella" placeholder="Huella">
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
             </div>
