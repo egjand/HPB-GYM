@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 23-07-2024 a las 23:15:34
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 15-08-2024 a las 02:58:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,12 +44,16 @@ INSERT INTO `cliente` (`id`, `idcliente`, `nombre`, `mes_registro`, `mes_vencimi
 (10, 106, 'Paola Lopez', '2024-07-18', '2024-08-18', ''),
 (11, 160, 'Eugenio Gonzalez', '2024-07-18', '2024-07-24', ''),
 (12, 200, 'Edwin Aranda', '2024-07-18', '2024-07-30', ''),
-(13, 201, 'Leo Naz', '2024-07-18', '2024-08-08', ''),
+(13, 201, 'Leo Naz', '2024-08-12', '2024-09-12', ''),
 (14, 103, 'Danna Elizabeth', '2024-07-18', '2024-09-18', ''),
 (15, 163, 'Josue Cabrera', '2024-07-18', '2024-08-18', ''),
 (16, 202, 'Ratas', '2024-07-21', '2025-07-21', ''),
 (31, 110, 'Jorge Chavez', '2024-07-22', '2024-07-22', ''),
-(34, 102, 'HOMERO SIMPSON', '2024-07-22', '2024-08-05', '');
+(34, 102, 'HOMERO SIMPSON', '2024-08-12', '2025-02-12', ''),
+(35, 203, 'Bock', '2024-07-24', '2024-08-24', ''),
+(36, 23, 'cfce|', '2024-07-25', '2024-08-08', ''),
+(37, 204, 'Sor Juano', '2024-08-12', '2025-02-12', ''),
+(39, 205, 'Juan Andres', '2024-08-13', '2024-09-13', '');
 
 -- --------------------------------------------------------
 
@@ -170,8 +174,9 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`codproducto`, `descripcion`, `precio`, `existencia`) VALUES
 (7, 'OFF! REPELENTE', 85.00, 5),
-(8, 'MOSQUITERO CAMA', 299.00, 13),
-(9, 'MOSQUITERO VENTANA', 199.00, 5);
+(8, 'MOSQUITERO CAMA', 299.00, 12),
+(9, 'MOSQUITERO VENTANA', 199.00, 8),
+(10, 'proteina vainilla ', 150.00, 4);
 
 -- --------------------------------------------------------
 
@@ -282,7 +287,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion`
@@ -318,7 +323,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `codproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `codproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
