@@ -13,7 +13,7 @@ include_once "includes/header.php";
 ?>
 <!-- Content Row -->
 <div class="row">
-    <img src="../assets/img/logo-punto-fitness-blanco-login.png" alt="" class="fondo">
+    <img src="../assets/img/hpbgym.png" alt="" class="fondo">
 </div>
 
 <style>
