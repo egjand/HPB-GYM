@@ -111,6 +111,9 @@ include_once "includes/header.php";
                                     <td>
                                         <button class="btn btn-success btn-sm" onclick="actualizarStock(<?php echo $data['codproducto']; ?>, 'mas')">+</button>
                                         <button class="btn btn-danger btn-sm" onclick="actualizarStock(<?php echo $data['codproducto']; ?>, 'menos')">-</button>
+                                        <form action="eliminar_producto.php?id=<?php echo $data['codproducto']; ?>" method="post" class="confirmar d-inline">
+                                                <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
+                                            </form>
                                     </td>
                                 </tr>
                         <?php }
@@ -125,6 +128,7 @@ include_once "includes/header.php";
 <?php include_once "includes/footer.php"; ?>
 
 <script>
+
     function actualizarStock(idProducto, accion) {
         $.ajax({
             url: 'actualizar_stock.php',
@@ -133,8 +137,7 @@ include_once "includes/header.php";
             data: {
                 id: idProducto,
                 accion: accion
-            },
-            success: function(response) {
+            },       success: function(response) {
                 // Actualizar el stock en la tabla
                 $('#stock_' + idProducto).text(response.nuevoStock);
             },
@@ -143,4 +146,7 @@ include_once "includes/header.php";
             }
         });
     }
+     
+
+
 </script>
