@@ -112,7 +112,7 @@ include_once "includes/header.php";
                                         <button class="btn btn-success btn-sm" onclick="actualizarStock(<?php echo $data['codproducto']; ?>, 'mas')">+</button>
                                         <button class="btn btn-danger btn-sm" onclick="actualizarStock(<?php echo $data['codproducto']; ?>, 'menos')">-</button>
                                         <form action="eliminar_producto.php?id=<?php echo $data['codproducto']; ?>" method="post" class="confirmar d-inline">
-                                                <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
+                                                <button class="btn btn-danger btn-sm" type="submit"><i class='fas fa-trash-alt'></i> </button>
                                             </form>
                                     </td>
                                 </tr>
