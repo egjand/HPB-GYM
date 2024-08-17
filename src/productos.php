@@ -74,13 +74,13 @@ include_once "includes/header.php";
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="precio" class=" text-dark font-weight-bold">Precio</label>
-                                <input type="text" placeholder="Ingrese precio" class="form-control" name="precio" id="precio">
+                                <input type="text" onkeypress="return isNumberKey(event)" placeholder="Ingrese precio" class="form-control" name="precio" id="precio">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="cantidad" class=" text-dark font-weight-bold">Cantidad</label>
-                                <input type="number" placeholder="Ingrese cantidad" class="form-control" name="cantidad" id="cantidad">
+                                <input type="text" onkeypress="return isNumberKey(event)" placeholder="Ingrese cantidad" class="form-control" name="cantidad" id="cantidad">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -138,7 +138,10 @@ include_once "includes/header.php";
 <?php include_once "includes/footer.php"; ?>
 
 <script>
-
+function isNumberKey(evt) {
+    var charCode = evt.which ? evt.which : evt.keyCode;
+    return !(charCode < 48 || charCode > 57); // Permitir solo números
+    }
     function actualizarStock(idProducto, accion) {
         $.ajax({
             url: 'actualizar_stock.php',
