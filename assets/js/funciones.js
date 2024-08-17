@@ -165,7 +165,7 @@ function calcularDescuento(e, id) {
                         timer: 2000
                     })
                     listar();
-                } else {}
+                } else { }
             }
         });
     }
@@ -464,7 +464,7 @@ function btnCambiar(e) {
 
 function editarCliente(idcliente) {
     const action = "editarCliente";
-   
+
     $.ajax({
         url: 'ajax.php',
         type: 'GET',
@@ -472,29 +472,30 @@ function editarCliente(idcliente) {
         data: {
             action: action,
             idcliente: idcliente
-            
+
         },
         success: function (response) {
-            
+            console.log(response);
             try {
-            const datos = JSON.parse(response);
-            $('#idcliente').val(datos.idcliente);
-            $('#nombre').val(datos.nombre);
-            $('#mes_registro').val(datos.mes_registro);
-            $('#mes_vencimiento').val(datos.mes_vencimiento);
-            $('#id').val(datos.id);
-            $('#btnAccion').val('Modificar');
+                const datos = JSON.parse(response);
+
+                $('#idcliente').val(datos.idcliente);
+                $('#nombre').val(datos.nombre);
+                $('#mes_registro').val(datos.mes_registro);
+                $('#mes_vencimiento').val(datos.mes_vencimiento);
+                $('#id').val(datos.id);
+                $('#btnAccion').val('Modificar');
             } catch (e) {
                 console.error('JSON mal formado:', e);
             }
-            
+
         },
-        
+
         error: function (error) {
             console.log(error);
 
         }
-        
+
     });
 }
 
@@ -523,23 +524,23 @@ function editarUsuario(id) {
     });
 }
 
-function editarProducto(id) {
+function editarProducto(codproducto) {
     const action = "editarProducto";
     $.ajax({
         url: 'ajax.php',
         type: 'GET',
         async: true,
         data: {
-            editarProducto: action,
-            id: id
+            action: action,
+            codproducto: codproducto
         },
         success: function (response) {
+
             const datos = JSON.parse(response);
-            $('#codigo').val(datos.codigo);
             $('#producto').val(datos.descripcion);
             $('#precio').val(datos.precio);
             $('#cantidad').val(datos.existencia);
-            $('#id').val(datos.codproducto);
+            $('#codproducto').val(datos.codproducto);
             $('#btnAccion').val('Modificar');
         },
         error: function (error) {

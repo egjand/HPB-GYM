@@ -10,11 +10,7 @@ if (empty($existe) && $id_user != 1) {
 }
 if (!empty($_POST)) {
     $alert = "";
-    //$id = $_POST['id'];
-    $producto = $_POST['producto'];
-    $precio = $_POST['precio'];
-    $cantidad = $_POST['cantidad'];
-    if (empty($producto) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad <  0) {
+    if (empty($_POST['producto'])) {
         $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         Todo los campos son obligatorios
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,17 +18,12 @@ if (!empty($_POST)) {
                         </button>
                     </div>';
     } else {
+        $id = $_POST['codproducto'];
+        $producto = $_POST['producto'];
+        $precio = $_POST['precio'];
+        $cantidad = $_POST['cantidad'];
+        
         if (empty($id)) {
-            $query = mysqli_query($conexion, "SELECT * FROM producto WHERE descripcion = '$producto'");
-            $result = mysqli_fetch_array($query);
-            if ($result > 0) {
-                $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        El Producto ya existe
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
-            } else {
                 $query_insert = mysqli_query($conexion, "INSERT INTO producto(descripcion,precio,existencia) values ('$producto', '$precio', '$cantidad')");
                 if ($query_insert) {
                     $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -46,10 +37,23 @@ if (!empty($_POST)) {
                     Error al registrar el producto
                   </div>';
                 }
+            }else{
+                $query_update = mysqli_query($conexion, "UPDATE producto set descripcion = '$producto', precio = $precio, existencia = $cantidad where codproducto = $id");
+                if ($query_update) {
+                    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Producto Actualizado con exito
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>';
+                } else {
+                    $alert = '<div class="alert alert-danger" role="alert">
+                    Error al editar
+                  </div>';
+                }
             }
         }
     }
-}
 include_once "includes/header.php";
 ?>
 <div class="card shadow-lg">
@@ -61,8 +65,10 @@ include_once "includes/header.php";
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
+                                
                                 <label for="producto" class=" text-dark font-weight-bold">Producto</label>
                                 <input type="text" placeholder="Ingrese nombre del producto" name="producto" id="producto" class="form-control">
+                                <input type="hidden" name="codproducto" id="codproducto">
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -111,6 +117,9 @@ include_once "includes/header.php";
                                     <td>
                                         <button class="btn btn-success btn-sm" onclick="actualizarStock(<?php echo $data['codproducto']; ?>, 'mas')">+</button>
                                         <button class="btn btn-danger btn-sm" onclick="actualizarStock(<?php echo $data['codproducto']; ?>, 'menos')">-</button>
+
+                                        <a href="#" onclick="editarProducto(<?php echo $data['codproducto']; ?>)" class="btn btn-primary btn-sm"><i class='fas fa-edit'></i></a>
+
                                         <form action="eliminar_producto.php?id=<?php echo $data['codproducto']; ?>" method="post" class="confirmar d-inline">
                                                 <button class="btn btn-danger btn-sm" type="submit"><i class='fas fa-trash-alt'></i> </button>
                                             </form>

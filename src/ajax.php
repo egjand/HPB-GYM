@@ -27,7 +27,7 @@ switch ($action) {
         $producto = mysqli_query($conexion, "SELECT * FROM producto WHERE codigo LIKE '%" . $nombre . "%' OR descripcion LIKE '%" . $nombre . "%'");
         while ($row = mysqli_fetch_assoc($producto)) {
             $data['id'] = $row['codproducto'];
-            $data['label'] = $row['codigo'] . ' - ' .$row['descripcion'];
+            $data['label'] = $row['codigo'] . ' - ' . $row['descripcion'];
             $data['value'] = $row['descripcion'];
             $data['precio'] = $row['precio'];
             $data['existencia'] = $row['existencia'];
@@ -89,11 +89,11 @@ switch ($action) {
                 $stockNuevo = mysqli_fetch_assoc($stockActual);
                 $stockTotal = $stockNuevo['existencia'] - $cantidad;
                 $stock = mysqli_query($conexion, "UPDATE producto SET existencia = $stockTotal WHERE codproducto = $id_producto");
-            } 
+            }
             if ($insertarDet) {
                 $eliminar = mysqli_query($conexion, "DELETE FROM detalle_temp WHERE id_usuario = $id_user");
                 $msg = array('id_cliente' => $id_cliente, 'id_venta' => $ultimoId);
-            } 
+            }
         } else {
             $msg = array('mensaje' => 'error');
         }
@@ -111,7 +111,7 @@ switch ($action) {
         $insertar = mysqli_query($conexion, "UPDATE detalle_temp SET descuento = $total_desc, total = '$total'  WHERE id = $id");
         if ($insertar) {
             $msg = array('mensaje' => 'descontado');
-        }else{
+        } else {
             $msg = array('mensaje' => 'error');
         }
         echo json_encode($msg);
@@ -122,6 +122,7 @@ switch ($action) {
         $id = $_GET['idcliente'];
         $sql = mysqli_query($conexion, "SELECT * FROM cliente WHERE idcliente = $id");
         $data = mysqli_fetch_array($sql);
+        
         echo json_encode($data);
         exit;
         break;
@@ -135,9 +136,10 @@ switch ($action) {
         break;
 
     case 'editarProducto':
-        $id = $_GET['id'];
+        $id = $_GET['codproducto'];
         $sql = mysqli_query($conexion, "SELECT * FROM producto WHERE codproducto = $id");
         $data = mysqli_fetch_array($sql);
+        
         echo json_encode($data);
         exit;
         break;
@@ -160,11 +162,11 @@ switch ($action) {
             } else {
                 $msg = "Error al ingresar";
             }
-        }else{
+        } else {
             $query = mysqli_query($conexion, "INSERT INTO detalle_temp(id_usuario, id_producto, cantidad ,precio_venta, total) VALUES ($id_user, $id, $cant,'$precio', '$total')");
             if ($query) {
                 $msg = "registrado";
-            }else{
+            } else {
                 $msg = "Error al ingresar";
             }
         }
@@ -185,7 +187,7 @@ switch ($action) {
                 $query = mysqli_query($conexion, "UPDATE usuario SET clave = '$nueva' WHERE idusuario = $id");
                 if ($query) {
                     $msg = 'ok';
-                }else{
+                } else {
                     $msg = 'error';
                 }
             } else {
@@ -200,4 +202,3 @@ switch ($action) {
         echo  json_encode("Acción no válida");
         die();
 }
-?>
