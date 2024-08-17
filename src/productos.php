@@ -85,6 +85,7 @@ include_once "includes/header.php";
                         </div>
                         <div class="col-md-6">
                             <input type="submit" value="Registrar" class="btn btn-primary" id="btnAccion">
+                            <input type="button" value="Limpiar" class="btn btn-success" id="btnNuevo" onclick="limpiar()">
                         </div>
                     </div>
 
