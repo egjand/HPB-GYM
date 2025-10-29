@@ -21,9 +21,9 @@ if (empty($_SESSION['active'])) {
 
 <body>
     <div class="wrapper ">
-        <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/hpbgym.png">
+        <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/logo-punto-fitness.png">
             <div class="logo"><a href="./" class="simple-text logo-normal">
-                    HPB GYM
+                    PUNTO FITNESS
                 </a></div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
